@@ -1,31 +1,17 @@
 class CellsByLocation
   def initialize
-    @cells_at_locations = []
+    @cells_at_keys = []
   end
 
-  def at_location(location, &block)
-    @cells_at_locations.each { |maybe_this_location| maybe_this_location.(location, &block) }
+  def at_location(key, &block)
+    @cells_at_keys.each { |maybe_this_key| maybe_this_key.(key, &block) }
   end
 
-  def set(cell, location)
-    @cells_at_locations << ->(loc, &block) do
-      loc.at?(location) { block.(cell) }
+  def set(cell, here)
+    @cells_at_keys << ->(key, &block) do
+      key.eq?(here) { block.(cell) }
     end
   end
 end
 
-class Location
-  attr_accessor :x, :y
-  def initialize(x, y)
-    @x, @y = x, y
-  end
-
-  def at?(location, &block)
-    location.same_x_y?(self.x, self.y, &block)
-  end
-
-  def same_x_y?(x, y, &block)
-    block.call if self.x == x && self.y == y
-  end
-end
 

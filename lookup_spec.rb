@@ -3,6 +3,21 @@ require_relative 'cells_by_location'
 class Cell
 end
 
+class Location
+  attr_accessor :x, :y
+  def initialize(x, y)
+    @x, @y = x, y
+  end
+
+  def eq?(location, &block)
+    location.same_x_y?(self.x, self.y, &block)
+  end
+
+  def same_x_y?(x, y, &block)
+    block.call if self.x == x && self.y == y
+  end
+end
+
 describe "Looking up cells by location" do
   context "when no cells have been added" do
     it "does not call the callback" do
