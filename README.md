@@ -7,7 +7,7 @@ Want something that provides lookups for something, but you are sick and tired o
 Here's a way to do it.
 
 ````
-cells = CellsByLocation.new
+cells = NoReturn::LookupTable.new
 cell1 = Cell.new
 cell2 = Cell.new
 
