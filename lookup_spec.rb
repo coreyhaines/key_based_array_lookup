@@ -61,4 +61,18 @@ describe "Looking up cells by location" do
       end
     end
   end
+
+  context "when you have two cells" do
+    it "sends the cell you are looking for" do
+        cells = CellsByLocation.new
+        cell1 = Cell.new
+        cell2 = Cell.new
+
+        cells.set cell1, Location.new(1, 1)
+        cells.set cell2, Location.new(1, 2)
+
+        expect { |b| cells.at_location(Location.new(1,2), &b) }.to yield_with_args(cell2)
+        expect { |b| cells.at_location(Location.new(1,1), &b) }.to yield_with_args(cell1)
+    end
+  end
 end
