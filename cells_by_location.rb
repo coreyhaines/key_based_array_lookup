@@ -1,14 +1,14 @@
 class CellsByLocation
   def initialize
-    @cells = []
+    @cells_at_locations = []
   end
 
   def at_location(location, &block)
-    @cells.each { |l| l.(location, &block) }
+    @cells_at_locations.each { |maybe_this_location| maybe_this_location.(location, &block) }
   end
 
   def set(cell, location)
-    @cells << ->(loc, &block) do
+    @cells_at_locations << ->(loc, &block) do
       loc.at?(location) { block.(cell) }
     end
   end
