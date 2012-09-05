@@ -8,7 +8,9 @@ class CellsByLocation
   end
 
   def set(cell, location)
-    @cells << ->(loc, &block) { block.(cell) if loc.at?(location) }
+    @cells << ->(loc, &block) do
+      loc.at?(location) { block.(cell) }
+    end
   end
 end
 
@@ -21,12 +23,12 @@ class Location
     @x, @y = x, y
   end
 
-  def at?(location)
-    location.same_x_y?(self.x, self.y)
+  def at?(location, &block)
+    location.same_x_y?(self.x, self.y, &block)
   end
 
-  def same_x_y?(x, y)
-    self.x == x && self.y == y
+  def same_x_y?(x, y, &block)
+    block.call if self.x == x && self.y == y
   end
 end
 
